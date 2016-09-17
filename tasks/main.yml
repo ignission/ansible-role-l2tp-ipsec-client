@@ -1,1 +1,84 @@
 ---
+# install
+- name: Ensure l2tp-ipsec client packages are installed.
+  yum:
+    name: "{{ item }}"
+    state: installed
+    enablerepo: epel
+  with_items:
+    - xl2tpd
+    - libreswan
+    - lsof
+
+# configure ipsec
+- name: Copy ipsec configuration in place.
+  copy:
+    src: ipsec.conf
+    dest: /etc/ipsec.conf
+    owner: root
+    group: root
+    mode: 00640
+  notify:
+    - restart ipsec
+
+- name: Copy pre-shared-key in place.
+  template:
+    src: default.secrets.j2
+    dest: /etc/ipsec.d/default.secrets
+    owner: root
+    group: root
+    mode: 00640
+  notify:
+    - restart ipsec
+    - restart xl2tpd
+
+- name: Copy ipsec connect configuration in place.
+  template:
+    src: connection.conf.j2
+    dest: /etc/ipsec.d/connection.conf
+    owner: root
+    group: root
+    mode: 00640
+  notify:
+    - restart ipsec
+
+# configure xl2tpd
+- name: Copy xl2tpd configuration in place.
+  template:
+    src: xl2tpd.conf.j2
+    dest: /etc/xl2tpd/xl2tpd.conf
+    owner: root
+    group: root
+    mode: 00640
+  notify:
+    - restart ipsec
+    - restart xl2tpd
+
+- name: Copy xl2tpd options in place.
+  template:
+    src: options.xl2tpd.conn-1.j2
+    dest: /etc/ppp/options.xl2tpd.conn-1
+    owner: root
+    group: root
+    mode: 00640
+  notify:
+    - restart ipsec
+    - restart xl2tpd
+
+- name: Copy chap authentication in place.
+  template:
+    src: chap-secrets.j2
+    dest: /etc/ppp/chap-secrets
+    owner: root
+    group: root
+    mode: 00640
+  notify:
+    - restart ipsec
+    - restart xl2tpd
+
+# service
+- name: Ensure xl2tpd is started and enabled to start at boot.
+  service: name=xl2tpd state=started enabled=yes
+
+- name: Ensure ipsec is started and enabled to start at boot.
+  service: name=ipsec state=started enabled=yes

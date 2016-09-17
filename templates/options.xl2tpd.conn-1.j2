@@ -1,0 +1,28 @@
+# Managed by chef
+
+name {{ vpn_username }}
+
+# 認証を設定しません。設定すると接続できない様子です。
+noauth
+
+# local IP アドレスが指定されない場合にIPを決定する動作を無効にします
+noipdefault
+
+# ハードウェアフロー制御 (RTS/CTS) を使用します。
+crtscts
+
+# 最大受信単位 (MRU) と最大転送単位 (MTU) を指定します。
+mtu 1410
+mru 1410
+
+# 相手側をゲートウェイとするディフォルト経路は追加しません。
+nodefaultroute
+
+# UUCP 形式のロックファイルを生成します。
+lock
+
+# Proxy ARP により接続してきたホストがローカルネットワークに在るように見せます。
+proxyarp
+
+# ログファイルの保存場所を指定します。
+logfile /var/log/xl2tpd.conn-1.log

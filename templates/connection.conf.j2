@@ -1,0 +1,16 @@
+# Managed by ansible
+
+conn PEER_L2TP
+  authby=secret
+  pfs=no
+  rekey=no
+  keyingtries=3
+  type=transport
+
+  left=%defaultroute
+  leftprotoport=17/1701
+
+  right={{ vpn_server }}
+  rightprotoport=17/1701
+
+  auto=add

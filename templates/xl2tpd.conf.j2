@@ -1,0 +1,18 @@
+; Managed by ansible
+;
+; This is a minimal sample xl2tpd configuration file for use
+; with L2TP over IPsec.
+;
+
+[global]
+
+[lns default]
+
+[lac L2TP1]
+lns = {{ vpn_server }}
+require chap = yes
+refuse pap = yes
+require authentication = yes
+ppp debug = yes
+pppoptfile = /etc/ppp/options.xl2tpd.conn-1
+length bit = yes
