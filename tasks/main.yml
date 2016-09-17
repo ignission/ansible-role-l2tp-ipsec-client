@@ -20,7 +20,8 @@
     mode: 00640
   notify:
     - restart ipsec
-
+    - restart xl2tpd
+    
 - name: Copy pre-shared-key in place.
   template:
     src: default.secrets.j2
@@ -41,6 +42,7 @@
     mode: 00640
   notify:
     - restart ipsec
+    - restart xl2tpd
 
 # configure xl2tpd
 - name: Copy xl2tpd configuration in place.
