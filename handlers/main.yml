@@ -1,6 +1,6 @@
 ---
-- name: restart xl2tpd
-  service: name=xl2tpd state=restarted
+- name: restart vpn-client
+  service: name=vpn-client state=restarted
 
-- name: restart ipsec
-  service: name=ipsec state=restarted
+- name: reload daemon
+  command: systemctl daemon-reload

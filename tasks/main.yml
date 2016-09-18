@@ -19,9 +19,8 @@
     group: root
     mode: 00640
   notify:
-    - restart ipsec
-    - restart xl2tpd
-    
+    - restart vpn-client
+
 - name: Copy pre-shared-key in place.
   template:
     src: default.secrets.j2
@@ -30,8 +29,7 @@
     group: root
     mode: 00640
   notify:
-    - restart ipsec
-    - restart xl2tpd
+    - restart vpn-client
 
 - name: Copy ipsec connect configuration in place.
   template:
@@ -41,8 +39,7 @@
     group: root
     mode: 00640
   notify:
-    - restart ipsec
-    - restart xl2tpd
+    - restart vpn-client
 
 # configure xl2tpd
 - name: Copy xl2tpd configuration in place.
@@ -53,8 +50,7 @@
     group: root
     mode: 00640
   notify:
-    - restart ipsec
-    - restart xl2tpd
+    - restart vpn-client
 
 - name: Copy xl2tpd options in place.
   template:
@@ -64,8 +60,7 @@
     group: root
     mode: 00640
   notify:
-    - restart ipsec
-    - restart xl2tpd
+    - restart vpn-client
 
 - name: Copy chap authentication in place.
   template:
@@ -75,8 +70,27 @@
     group: root
     mode: 00640
   notify:
-    - restart ipsec
-    - restart xl2tpd
+    - restart vpn-client
+
+- name: Copy vpn connection script in place.
+  template:
+    src: vpn-connect.sh.j2
+    dest: /usr/local/bin/vpn-connect.sh
+    owner: root
+    group: root
+    mode: 00750
+  notify:
+    - restart vpn-client
+
+- name: Copy vpn-client service in place.
+  copy:
+    src: vpn-client.service
+    dest: /etc/systemd/system/vpn-client.service
+    owner: root
+    group: root
+    mode: 00644
+  notify:
+    - reload daemon
 
 # service
 - name: Ensure xl2tpd is started and enabled to start at boot.
@@ -84,3 +98,6 @@
 
 - name: Ensure ipsec is started and enabled to start at boot.
   service: name=ipsec state=started enabled=yes
+
+- name: Ensure vpn-client is started and enabled to start at boot.
+  service: name=vpn-client state=started enabled=yes
