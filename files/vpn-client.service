@@ -4,7 +4,7 @@
 Description = VPN client
 
 [Service]
-ExecStart = /usr/local/bin/vpn-connect.sh
+ExecStart = /usr/local/sbin/vpn-connect.sh
 ExecStop = /sbin/xl2tpd-control disconnect L2TP1
 Restart = always
 Type = simple

@@ -75,7 +75,7 @@
 - name: Copy vpn connection script in place.
   template:
     src: vpn-connect.sh.j2
-    dest: /usr/local/bin/vpn-connect.sh
+    dest: /usr/local/sbin/vpn-connect.sh
     owner: root
     group: root
     mode: 00750
