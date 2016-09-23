@@ -82,22 +82,11 @@
   notify:
     - restart vpn-client
 
-- name: Copy vpn-client service in place.
-  copy:
-    src: vpn-client.service
-    dest: /etc/systemd/system/vpn-client.service
-    owner: root
-    group: root
-    mode: 00644
-  notify:
-    - reload daemon
-
 # service
+- include: "rhel-{{ ansible_distribution_major_version }}.yml"
+
 - name: Ensure xl2tpd is started and enabled to start at boot.
   service: name=xl2tpd state=started enabled=yes
 
 - name: Ensure ipsec is started and enabled to start at boot.
   service: name=ipsec state=started enabled=yes
-
-- name: Ensure vpn-client is started and enabled to start at boot.
-  service: name=vpn-client state=started enabled=yes

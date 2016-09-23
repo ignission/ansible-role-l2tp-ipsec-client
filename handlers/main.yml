@@ -6,7 +6,6 @@
   with_items:
     - ipsec
     - xl2tpd
-    - vpn-client
 
 - name: reload daemon
   command: systemctl daemon-reload
