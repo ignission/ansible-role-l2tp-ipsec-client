@@ -4,3 +4,5 @@ vpn_PSK: toyvpn.com
 vpn_username: freeit
 vpn_password: 74158689
 vpn_local_cidr: 192.168.1.0/24
+vpn_mtu: 1410
+vpn_mru: 1410

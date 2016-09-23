@@ -12,8 +12,8 @@ noipdefault
 crtscts
 
 # 最大受信単位 (MRU) と最大転送単位 (MTU) を指定します。
-mtu 1410
-mru 1410
+mtu {{ vpn_mtu }}
+mru {{ vpn_mru }}
 
 # 相手側をゲートウェイとするディフォルト経路は追加しません。
 nodefaultroute
