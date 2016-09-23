@@ -1,6 +1,12 @@
 ---
 - name: restart vpn-client
-  service: name=vpn-client state=restarted
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - ipsec
+    - xl2tpd
+    - vpn-client
 
 - name: reload daemon
   command: systemctl daemon-reload

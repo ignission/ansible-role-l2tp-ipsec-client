@@ -3,9 +3,6 @@
 
 export PATH=$PATH:/usr/sbin
 
-/usr/bin/systemctl restart ipsec
-/usr/bin/systemctl restart xl2tpd
-
 while true
 do
   ip a | grep -E 'inet.+ppp'
