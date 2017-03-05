@@ -12,5 +12,5 @@ None.
 |l2tp_ipsec_client_username|String|Auth username.|freeit|
 |l2tp_ipsec_client_password|String|Auth password|74158689|
 |l2tp_ipsec_client_cidr|String|Local CIDR|192.168.1.0/24|
-|l2tp_ipsec_client_mtu|Integer|Maximum Transmission Unit|1410|
-|l2tp_ipsec_client_mru|Integer|Maximum Receive Unit|1410|
+|l2tp_ipsec_mtu|Integer|Maximum Transmission Unit|1410|
+|l2tp_ipsec_mru|Integer|Maximum Receive Unit|1410|
