@@ -5,18 +5,13 @@
     name: "{{ item }}"
     state: installed
     enablerepo: epel
-  with_items:
-    - xl2tpd
-    - libreswan
-    - lsof
+  with_items: [ xl2tpd, libreswan, lsof ]
 
 # configure ipsec
 - name: Copy ipsec configuration in place.
   copy:
     src: ipsec.conf
     dest: /etc/ipsec.conf
-    owner: root
-    group: root
     mode: 00640
   notify:
     - restart vpn-client
@@ -25,8 +20,6 @@
   template:
     src: default.secrets.j2
     dest: /etc/ipsec.d/default.secrets
-    owner: root
-    group: root
     mode: 00640
   notify:
     - restart vpn-client
@@ -35,8 +28,6 @@
   template:
     src: connection.conf.j2
     dest: /etc/ipsec.d/connection.conf
-    owner: root
-    group: root
     mode: 00640
   notify:
     - restart vpn-client
@@ -46,8 +37,6 @@
   template:
     src: xl2tpd.conf.j2
     dest: /etc/xl2tpd/xl2tpd.conf
-    owner: root
-    group: root
     mode: 00640
   notify:
     - restart vpn-client
@@ -56,8 +45,6 @@
   template:
     src: options.xl2tpd.conn-1.j2
     dest: /etc/ppp/options.xl2tpd.conn-1
-    owner: root
-    group: root
     mode: 00640
   notify:
     - restart vpn-client
@@ -66,8 +53,6 @@
   template:
     src: chap-secrets.j2
     dest: /etc/ppp/chap-secrets
-    owner: root
-    group: root
     mode: 00640
   notify:
     - restart vpn-client
@@ -76,8 +61,6 @@
   template:
     src: vpn-connect.sh.j2
     dest: /usr/local/sbin/vpn-connect.sh
-    owner: root
-    group: root
     mode: 00750
   notify:
     - restart vpn-client
@@ -87,6 +70,8 @@
 
 - name: Ensure xl2tpd is started and enabled to start at boot.
   service: name=xl2tpd state=started enabled=yes
+  when: ansible_connection != 'docker'
 
 - name: Ensure ipsec is started and enabled to start at boot.
   service: name=ipsec state=started enabled=yes
+  when: ansible_connection != 'docker'
