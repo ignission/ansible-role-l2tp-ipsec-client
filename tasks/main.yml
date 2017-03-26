@@ -75,3 +75,10 @@
 - name: Ensure ipsec is started and enabled to start at boot.
   service: name=ipsec state=started enabled=yes
   when: ansible_connection != 'docker'
+
+- name: Copy docker endpoint script.
+  template:
+    src: docker-endpoint.sh.j2
+    dest: /docker-endpoint.sh
+    mode: 0755
+  when: ansible_connection == 'docker'
