@@ -36,7 +36,9 @@ Example Playbook
 License
 -------
 
-BSD, MIT
+MIT
 
 Author Information
 ------------------
+
+Shoma Nishitateno
